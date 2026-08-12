@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fouber/ai-tutor-kb/mcp/schema/kb.schema.json",
+  "title": "知识库交换格式",
+  "description": "「AI 对话 → 出题执行器」之间的知识库结构。也是懒人学霸 MCP create_kb 工具的入参形状。",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "库名，遵循「锚点 · 范围 · 定位」语法，如：人教二下 · 100以内退位减法 · 专项突破",
+      "maxLength": 100
+    },
+    "subject": { "type": "string", "description": "学科，如：数学 / 语文 / 英语" },
+    "grade": { "type": "string", "description": "年级或学段，如：三年级 / 初二" },
+    "description": {
+      "type": "string",
+      "description": "训练目标与孩子情况的一句话说明，会影响出题风格（样题校准的结论写在这里）"
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 60,
+      "description": "章节按由易到难排列，每章一个能力层级",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string", "maxLength": 100 },
+          "points": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/point" }
+          }
+        },
+        "required": ["title", "points"]
+      }
+    }
+  },
+  "required": ["title", "subject", "grade", "chapters"],
+  "$defs": {
+    "point": {
+      "type": "object",
+      "description": "一个知识点 = 一次可独立考察的最小单元。支持 Markdown 与 LaTeX 公式（$...$）",
+      "properties": {
+        "term": {
+          "type": "string",
+          "description": "知识点名（简洁且明确，不能空泛或有歧义）"
+        },
+        "definition": {
+          "type": "string",
+          "description": "写给出题引擎看的释义：考查范围、关键规则/步骤/公式、易错点、与相近概念的边界，可附例题/反例与出题指令"
+        }
+      },
+      "required": ["term", "definition"]
+    }
+  }
+}
