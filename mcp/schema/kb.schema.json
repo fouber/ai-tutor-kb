@@ -7,26 +7,46 @@
   "properties": {
     "title": {
       "type": "string",
-      "description": "库名，遵循「锚点 · 范围 · 定位」语法，如：人教二下 · 100以内退位减法 · 专项突破",
-      "maxLength": 100
+      "description": "库名：简短一句，一眼看出练什么，如「两位数乘法」「初二物理 力学」「六上英语词汇」；不要堆砌「专项 / 冲刺 / 精讲」之类定位词，定位写进 description"
     },
-    "subject": { "type": "string", "description": "学科，如：数学 / 语文 / 英语" },
-    "grade": { "type": "string", "description": "年级或学段，如：三年级 / 初二" },
+    "subject": {
+      "type": "string",
+      "enum": ["语文", "数学", "英语", "物理", "化学", "生物", "历史", "地理", "科学", "编程", "音乐", "美术", "小语种", "其他"],
+      "description": "学科（标准中文，从列表中选；小语种统一填「小语种」，Python/Scratch 等填「编程」，奥数填「数学」；实在不属于任何一类才填「其他」）"
+    },
+    "grade": {
+      "type": "string",
+      "enum": [
+        "学前", "小学", "初中", "高中", "大学", "通用",
+        "一年级", "二年级", "三年级", "四年级", "五年级", "六年级",
+        "预备班", "初一", "初二", "初三",
+        "高一", "高二", "高三",
+        "大一", "大二", "大三", "大四",
+        "七年级", "八年级", "九年级"
+      ],
+      "description": "年级（标准中文，从列表中选，尽量选能确定的最细一级；五·四制初中的七/八/九年级也可直接填；大学/成人/兴趣自学填「大学」或「通用」）"
+    },
     "description": {
       "type": "string",
-      "description": "训练目标与孩子情况的一句话说明，会影响出题风格（样题校准的结论写在这里）"
+      "description": "出题侧重点（会随每次出题原样传给出题 AI，相当于这个库的长期出题约定）：侧重考查什么能力、难度定位、要重点覆盖的易错方向、表述或语言习惯。不要在这里指定题型（走 defaultQType），也不要复述章节目录。2~4 句陈述句"
+    },
+    "defaultQType": {
+      "type": "string",
+      "enum": ["单选", "多选", "判断", "听力", "默写", "填空", "问答"],
+      "description": "默认题型（选填）：这个库出题时各知识点的初始题型，不填 = 单选。家长明确说了练什么形态才设；「默写」只适用于语文库，「听力」只适用于英语 / 小语种库，与学科不符会被忽略"
     },
     "chapters": {
       "type": "array",
       "minItems": 1,
       "maxItems": 60,
-      "description": "章节按由易到难排列，每章一个能力层级",
+      "description": "章节列表：知识点的分组容器，按主题或由易到难排列。整库最多 60 章、600 个知识点",
       "items": {
         "type": "object",
         "properties": {
-          "title": { "type": "string", "maxLength": 100 },
+          "title": { "type": "string", "description": "章节名（分组标签，简洁明确）" },
           "points": {
             "type": "array",
+            "description": "本章知识点列表——建库的核心内容，每条含 term + definition",
             "items": { "$ref": "#/$defs/point" }
           }
         },
@@ -38,15 +58,15 @@
   "$defs": {
     "point": {
       "type": "object",
-      "description": "一个知识点 = 一次可独立考察的最小单元。支持 Markdown 与 LaTeX 公式（$...$）",
+      "description": "一条知识点。term 与 definition 都会作为提示词交给出题 AI；相似的知识点合并成一条，在 definition 里分别说清考查范围。支持 Markdown 与 LaTeX 公式（$...$）",
       "properties": {
         "term": {
           "type": "string",
-          "description": "知识点名（简洁且明确，不能空泛或有歧义）"
+          "description": "知识点名称（简洁而准确）。出题时按 term 定位考点，不能有歧义或空泛描述"
         },
         "definition": {
           "type": "string",
-          "description": "写给出题引擎看的释义：考查范围、关键规则/步骤/公式、易错点、与相近概念的边界，可附例题/反例与出题指令"
+          "description": "释义讲解：考查范围、关键规则/步骤/公式、易错点、与相近概念的边界；可含简短例题或反例。term 下涉及多个概念时，在这里分别说明各自的考查范围和练习要求"
         }
       },
       "required": ["term", "definition"]

@@ -8,8 +8,8 @@
 
 | 目录 | 内容 |
 |---|---|
-| [`skill/`](skill/SKILL.md) | **建库方法论**（Claude Agent Skill 格式）：澄清四问、知识点粒度标准、「锚点 · 范围 · 定位」库名语法、样题校准、二次确认纪律 |
-| [`mcp/`](mcp/README.md) | 懒人学霸 MCP 接入文档：令牌获取、各客户端配置、六个工具、批量写入与安全说明 |
+| [`skill/`](skill/SKILL.md) | **建库方法论**（Claude Agent Skill 格式）：澄清四问、知识点划分与释义写法、库名与出题侧重点、默认题型、样题校准、二次确认纪律 |
+| [`mcp/`](mcp/README.md) | 懒人学霸 MCP 接入文档：令牌获取、各客户端配置、六个工具与入参、学科年级取值、批量写入与安全说明 |
 | [`mcp/schema/`](mcp/schema/kb.schema.json) | 知识库交换格式（JSON Schema）——「AI 对话 → 出题执行器」之间的结构约定 |
 | [`examples/`](examples/dialogue.md) | 一次完整建库对话的实录形态，以及真实生成的卷子样例 |
 
@@ -37,7 +37,7 @@ claude mcp add --transport http lanrenxueba https://app.lanrenxueba.com/api/mcp 
 
 > 「孩子这学期计算老出错，尤其是退位减法，你说怎么办？」
 
-助手会先拉学情报告、追问到可出题的粒度、拟样题和你校准难度，把完整的库结构列给你确认，然后一键落库。你打开链接进入学习页，点「开始一次练习」，打印、批阅、复习排期都在应用内闭环。完整对话形态见 [examples/dialogue.md](examples/dialogue.md)。
+助手会先拉学情报告、追问到可出题的粒度、拟样题和你校准难度，把完整的库结构列给你确认，然后一键落库。你打开链接进入库页面，点「开始训练」，打印、批阅、复习排期都在应用内闭环。完整对话形态见 [examples/dialogue.md](examples/dialogue.md)。
 
 ## 只用方法论、不接 MCP，行不行？
 
