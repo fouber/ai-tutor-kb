@@ -37,7 +37,7 @@ claude mcp add --transport http lanrenxueba https://app.lanrenxueba.com/api/mcp 
 
 > 「孩子这学期计算老出错，尤其是退位减法，你说怎么办？」
 
-助手会先拉学情报告、追问到可出题的粒度、拟样题和你校准难度，把完整的库结构列给你确认，然后一键落库。你打开链接进入库页面，点「开始训练」，打印、批阅、复习排期都在应用内闭环。完整对话形态见 [examples/dialogue.md](examples/dialogue.md)。
+助手会先拉学情报告、追问到可出题的粒度、拟样题和你校准难度，把完整的库结构列给你确认，然后一键落库。你打开链接进入库页面，点「开始学习」，再点「开始一次练习」，打印、批阅、复习排期都在应用内闭环。完整对话形态见 [examples/dialogue.md](examples/dialogue.md)。
 
 ## 只用方法论、不接 MCP，行不行？
 
